@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/HostAPI/DesignTimeBuild
+/.vs/HostAPI/FileContentIndex
+/.vs/HostAPI/v17
+/.vs/ProjectEvaluation
+/CustomerApi/obj
+/HostAPI/obj
+/UserApi/obj
