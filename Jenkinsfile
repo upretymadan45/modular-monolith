@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout source code from repository
-                git 'https://github.com/yourusername/your-dotnet-core-project.git'
+                git credentialsId: 'github_access_token', url: 'https://github.com/upretymadan45/modular-monolith.git'
             }
         }
         
