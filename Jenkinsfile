@@ -15,24 +15,24 @@ pipeline {
         stage('Build') {
             steps {
                 // Restore dependencies
-                bat 'dotnet restore'
+                sh 'dotnet restore'
                 
                 // Build the project
-                bat 'dotnet build'
+                sh 'dotnet build'
             }
         }
         
         stage('Test') {
             steps {
                 // Run tests
-                bat 'dotnet test'
+                sh 'dotnet test'
             }
         }
         
         stage('Publish') {
             steps {
                 // Publish the project
-                bat 'dotnet publish -c Release -o ./publish_output'
+                sh 'dotnet publish -c Release -o ./publish_output'
             }
         }
     }
