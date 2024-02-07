@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/dotnet/sdk:8.0'
+            // Run the Docker container in privileged mode
+            args '-u root:root --privileged'
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -12,24 +18,24 @@ pipeline {
         stage('Build') {
             steps {
                 // Restore dependencies
-                sh 'dotnetRestore'
+                sh 'dotnet restore'
                 
                 // Build the project
-                sh 'dotnetBuild'
+                sh 'dotnet build'
             }
         }
         
         stage('Test') {
             steps {
                 // Run tests
-                sh 'dotnetTest'
+                sh 'dotnet test'
             }
         }
         
         stage('Publish') {
             steps {
                 // Publish the project
-                sh 'dotnetPublish -c Release -o ./publish_output'
+                sh 'dotnet publish -c Release -o ./publish_output'
             }
         }
     }
