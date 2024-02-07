@@ -9,19 +9,9 @@ pipeline {
             }
         }
         
-        stage('Run Docker Commands') {
+        stage('Build') {
             steps {
-                script {
-                    // Start a Docker container using a .NET SDK image
-                    def dockerImage = 'mcr.microsoft.com/dotnet/sdk:5.0'
-                    docker.image(dockerImage).inside('-u root:root --privileged') {
-                        // Execute Docker commands inside the container
-                        sh 'dotnet restore'
-                        sh 'dotnet build'
-                        sh 'dotnet test'
-                        sh 'dotnet publish -c Release -o ./publish'
-                    }
-                }
+               sh '/var/dotnetsdk build'
             }
         }
     }
