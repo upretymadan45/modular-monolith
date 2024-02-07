@@ -11,7 +11,7 @@ pipeline {
         
         stage('Build') {
             steps {
-               sh '/var/dotnetsdk build'
+               sh 'dotnet build'
             }
         }
     }
