@@ -1,12 +1,6 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/dotnet/sdk:8.0'
-            // Run the Docker container in privileged mode
-            args '-u root:root --privileged'
-        }
-    }
-
+    agent any
+    
     stages {
         stage('Checkout') {
             steps {
@@ -15,27 +9,19 @@ pipeline {
             }
         }
         
-        stage('Build') {
+        stage('Run Docker Commands') {
             steps {
-                // Restore dependencies
-                sh 'dotnet restore'
-                
-                // Build the project
-                sh 'dotnet build'
-            }
-        }
-        
-        stage('Test') {
-            steps {
-                // Run tests
-                sh 'dotnet test'
-            }
-        }
-        
-        stage('Publish') {
-            steps {
-                // Publish the project
-                sh 'dotnet publish -c Release -o ./publish_output'
+                script {
+                    // Start a Docker container using a .NET SDK image
+                    def dockerImage = 'mcr.microsoft.com/dotnet/sdk:5.0'
+                    docker.image(dockerImage).inside('-u root:root --privileged') {
+                        // Execute Docker commands inside the container
+                        sh 'dotnet restore'
+                        sh 'dotnet build'
+                        sh 'dotnet test'
+                        sh 'dotnet publish -c Release -o ./publish'
+                    }
+                }
             }
         }
     }
