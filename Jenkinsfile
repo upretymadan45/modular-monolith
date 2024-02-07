@@ -1,9 +1,6 @@
 pipeline {
     agent any
 
-    environment {  
-        dotnet = 'C:\\Program Files\\dotnet\\dotnet.exe'  
-    } 
     stages {
         stage('Checkout') {
             steps {
@@ -15,24 +12,24 @@ pipeline {
         stage('Build') {
             steps {
                 // Restore dependencies
-                sh 'dotnet restore'
+                sh 'dotnetRestore'
                 
                 // Build the project
-                sh 'dotnet build'
+                sh 'dotnetBuild'
             }
         }
         
         stage('Test') {
             steps {
                 // Run tests
-                sh 'dotnet test'
+                sh 'dotnetTest'
             }
         }
         
         stage('Publish') {
             steps {
                 // Publish the project
-                sh 'dotnet publish -c Release -o ./publish_output'
+                sh 'dotnetPublish -c Release -o ./publish_output'
             }
         }
     }
